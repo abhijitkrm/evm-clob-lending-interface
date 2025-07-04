@@ -4,6 +4,8 @@ import OrderbookView from '@/components/OrderbookView';
 import LendingForm from '@/components/LendingForm';
 import BorrowingForm from '@/components/BorrowingForm';
 import ActiveLoansView from '@/components/ActiveLoansView';
+import NetworkChecker from '@/components/NetworkChecker';
+import NetworkIndicator from '@/components/NetworkIndicator';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect, useMemo } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
@@ -55,6 +57,9 @@ export default function MarketsPage() {
               <span className="ml-2 text-xs font-light text-gray-500">Markets</span>
             </div>
             <div className="flex items-center space-x-3">
+              {/* Network Indicator */}
+              <NetworkIndicator />
+              
               {isConnected ? (
                 <div className="flex items-center space-x-2">
                   <span className="text-xs font-medium text-gray-700">
@@ -139,6 +144,9 @@ export default function MarketsPage() {
           </div>
         </div>
       </div>
+      
+      {/* Network Checker Modal */}
+      <NetworkChecker />
     </div>
   );
 }
