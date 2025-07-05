@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { useState, useEffect, useMemo } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { injected } from 'wagmi/connectors';
+import { useMarket, MARKETS } from '@/contexts/MarketContext';
 
 export default function MarketsPage() {
   const [activeTab, setActiveTab] = useState<'borrow' | 'lend'>('borrow');
@@ -17,6 +18,7 @@ export default function MarketsPage() {
   const { connect } = useConnect();
   const { disconnect } = useDisconnect();
   const [mounted, setMounted] = useState(false);
+  const { currentMarket, setCurrentMarket, availableMarkets } = useMarket();
 
   const injectedConnector = useMemo(() => injected(), []);
 
@@ -92,8 +94,29 @@ export default function MarketsPage() {
         <div className="max-w-7xl mx-auto">
           {/* Page Header */}
           <div className="mb-6">
-            <h1 className="text-3xl font-light text-gray-900 tracking-tight">WETH-USDC Market</h1>
-            <p className="text-gray-600 text-sm mt-1">Trade lending and borrowing positions with real-time orderbook matching</p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-light text-gray-900 tracking-tight">{currentMarket.name} Market</h1>
+                <p className="text-gray-600 text-sm mt-1">Trade lending and borrowing positions with real-time orderbook matching</p>
+              </div>
+              
+              {/* Market Switcher */}
+              <div className="flex bg-white/60 backdrop-blur-sm rounded-lg border border-gray-200/50 p-1">
+                {availableMarkets.map((market) => (
+                  <button
+                    key={market.id}
+                    onClick={() => setCurrentMarket(market)}
+                    className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                      currentMarket.id === market.id
+                        ? 'bg-white text-gray-900 shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    {market.name}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Main Grid Layout - Orderbook Left, Forms Right */}

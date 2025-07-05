@@ -9,11 +9,13 @@ import { CONTRACTS } from '@/lib/wagmi';
 import { ERC20_ABI, VENICE_FI_ABI } from '@/lib/contracts';
 import { toast } from 'sonner';
 import { Input } from "@/components/ui/input";
+import { useMarket } from '@/contexts/MarketContext';
 
 export default function LendingForm() {
   const { address } = useAccount();
+  const { currentMarket } = useMarket();
   const [formData, setFormData] = useState({
-    asset: CONTRACTS.MockUSDC as string,
+    asset: currentMarket.quoteAsset.address as string, // Always USDC for lending
     amount: '',
     interestRate: '',
     duration: '',
@@ -27,19 +29,30 @@ export default function LendingForm() {
 
   // Helper function to get token decimals
   const getTokenDecimals = (address: string) => {
-    return address === CONTRACTS.MockUSDC ? 6 : 18;
+    if (address === currentMarket.baseAsset.address) return currentMarket.baseAsset.decimals;
+    if (address === currentMarket.quoteAsset.address) return currentMarket.quoteAsset.decimals;
+    return 18; // fallback
   };
 
   // Helper function to get token symbol
   const getTokenSymbol = (address: string) => {
-    return address === CONTRACTS.MockUSDC ? 'USDC' : 'WETH';
+    if (address === currentMarket.baseAsset.address) return currentMarket.baseAsset.symbol;
+    if (address === currentMarket.quoteAsset.address) return currentMarket.quoteAsset.symbol;
+    return 'TOKEN'; // fallback
   };
 
-  // Asset options for combobox
+  // Asset options for combobox - lending is always in quote asset (USDC)
   const assetOptions = [
-    { value: CONTRACTS.MockUSDC, label: 'USDC' },
-    { value: CONTRACTS.MockWETH, label: 'WETH' }
+    { value: currentMarket.quoteAsset.address, label: currentMarket.quoteAsset.symbol }
   ];
+
+  // Update form asset when market changes
+  useEffect(() => {
+    setFormData(prev => ({
+      ...prev,
+      asset: currentMarket.quoteAsset.address
+    }));
+  }, [currentMarket]);
 
   // Read user's token balance
   const { data: balance, refetch: refetchBalance } = useReadContract({

@@ -39,16 +39,9 @@ export default function NetworkChecker() {
     return null;
   }
 
-  // Show success state briefly when on correct network
+  // Don't show anything when on correct network
   if (isOnCorrectNetwork && !showNetworkPrompt) {
-    return (
-      <div className="fixed top-4 right-4 z-50 bg-emerald-50 border border-emerald-200 rounded-lg p-3 shadow-lg animate-in fade-in duration-300">
-        <div className="flex items-center space-x-2 text-emerald-700">
-          <Wifi className="h-4 w-4" />
-          <span className="text-sm font-medium">Connected to {REQUIRED_CHAIN_NAME}</span>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   // Show network switch prompt if on wrong network
@@ -70,7 +63,7 @@ export default function NetworkChecker() {
 
           <div className="mb-6">
             <p className="text-gray-600 text-sm mb-3">
-              VeniceFi requires you to be connected to <strong>{REQUIRED_CHAIN_NAME}</strong> to function properly.
+              VeniceFi requires you to be connected to the correct network to function properly.
             </p>
             <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
               <div className="flex justify-between items-center text-sm">
@@ -81,7 +74,7 @@ export default function NetworkChecker() {
               </div>
               <div className="flex justify-between items-center text-sm mt-2">
                 <span className="text-gray-500">Required Network:</span>
-                <span className="font-medium text-emerald-600">{REQUIRED_CHAIN_NAME}</span>
+                <span className="font-medium text-emerald-600">Correct Network</span>
               </div>
             </div>
           </div>

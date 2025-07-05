@@ -9,15 +9,17 @@ import { CONTRACTS } from '@/lib/wagmi';
 import { ERC20_ABI, VENICE_FI_ABI } from '@/lib/contracts';
 import { toast } from 'sonner';
 import { Input } from "@/components/ui/input";
+import { useMarket } from '@/contexts/MarketContext';
 
 export default function BorrowingForm() {
   const { address } = useAccount();
+  const { currentMarket } = useMarket();
   const [formData, setFormData] = useState({
-    asset: CONTRACTS.MockUSDC as string,
+    asset: currentMarket.quoteAsset.address as string, // Always USDC for borrowing
     amount: '',
     maxInterestRate: '',
     duration: '',
-    collateralAsset: CONTRACTS.MockWETH as string,
+    collateralAsset: currentMarket.baseAsset.address as string, // WETH or WBTC based on market
     collateralAmount: ''
   });
 
@@ -30,16 +32,16 @@ export default function BorrowingForm() {
 
   // Helper function to get token decimals
   const getTokenDecimals = (address: string) => {
-    if (address === CONTRACTS.MockUSDC) return 6;
-    if (address === CONTRACTS.MockWETH) return 18;
-    return 18;
+    if (address === currentMarket.baseAsset.address) return currentMarket.baseAsset.decimals;
+    if (address === currentMarket.quoteAsset.address) return currentMarket.quoteAsset.decimals;
+    return 18; // fallback
   };
 
   // Helper function to get token symbol
   const getTokenSymbol = (address: string) => {
-    if (address === CONTRACTS.MockUSDC) return 'USDC';
-    if (address === CONTRACTS.MockWETH) return 'WETH';
-    return 'TOKEN';
+    if (address === currentMarket.baseAsset.address) return currentMarket.baseAsset.symbol;
+    if (address === currentMarket.quoteAsset.address) return currentMarket.quoteAsset.symbol;
+    return 'TOKEN'; // fallback
   };
 
   // Read asset balance
@@ -154,10 +156,23 @@ export default function BorrowingForm() {
 
   const buttonState = getButtonState();
 
-  // Asset options for combobox
+  // Update form data when market changes
+  useEffect(() => {
+    setFormData(prev => ({
+      ...prev,
+      asset: currentMarket.quoteAsset.address, // Always USDC for borrowing
+      collateralAsset: currentMarket.baseAsset.address // WETH or WBTC based on market
+    }));
+  }, [currentMarket]);
+
+  // Asset options for combobox - borrowing is always in quote asset (USDC)
   const assetOptions = [
-    { value: CONTRACTS.MockUSDC, label: 'USDC' },
-    { value: CONTRACTS.MockWETH, label: 'WETH' }
+    { value: currentMarket.quoteAsset.address, label: currentMarket.quoteAsset.symbol }
+  ];
+
+  // Collateral options for combobox - collateral is the base asset (WETH/WBTC)
+  const collateralOptions = [
+    { value: currentMarket.baseAsset.address, label: currentMarket.baseAsset.symbol }
   ];
 
   return (
@@ -232,7 +247,7 @@ export default function BorrowingForm() {
           <AssetCombobox
             value={formData.collateralAsset}
             onChange={(value) => setFormData({ ...formData, collateralAsset: value })}
-            assets={assetOptions}
+            assets={collateralOptions}
             placeholder="Select collateral..."
           />
         </div>

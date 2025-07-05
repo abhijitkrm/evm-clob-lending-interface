@@ -6,6 +6,7 @@ import { VENICE_FI_ABI } from '@/lib/contracts';
 import { CONTRACTS } from '@/lib/wagmi';
 import { formatUnits } from 'viem';
 import { Button } from '@/components/ui/button';
+import { useMarket } from '@/contexts/MarketContext';
 
 interface LoanOffer {
   id: bigint;
@@ -34,6 +35,7 @@ interface LoanDemand {
 
 export default function OrderbookView() {
   const { address } = useAccount();
+  const { currentMarket } = useMarket();
   const { writeContract, data: hash, isPending } = useWriteContract();
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
     hash,
@@ -152,7 +154,11 @@ export default function OrderbookView() {
         createdAt: createdAt as bigint,
       } as LoanOffer;
     })
-    .filter((offer): offer is LoanOffer => offer !== undefined && offer.isActive);
+    .filter((offer): offer is LoanOffer => 
+      offer !== undefined && 
+      offer.isActive &&
+      offer.asset === currentMarket.quoteAsset.address // Only show offers for current market's quote asset (USDC)
+    );
 
   // Process loan demands data - convert arrays to objects
   const loanDemands: LoanDemand[] = demandHooks
@@ -189,18 +195,25 @@ export default function OrderbookView() {
       return demand;
     })
     .filter((demand): demand is LoanDemand => {
-      const isValid = demand !== undefined && demand.isActive;
+      const isValid = demand !== undefined && 
+        demand.isActive &&
+        demand.asset === currentMarket.quoteAsset.address && // Borrowing current market's quote asset (USDC)
+        demand.collateralAsset === currentMarket.baseAsset.address; // Using current market's base asset as collateral
       console.log(`Debug - Filtering demand:`, demand, 'isValid:', isValid);
       return isValid;
     });
 
   // Helper functions
   const getTokenSymbol = (address: string) => {
-    return address === CONTRACTS.MockUSDC ? 'USDC' : 'WETH';
+    if (address === currentMarket.baseAsset.address) return currentMarket.baseAsset.symbol;
+    if (address === currentMarket.quoteAsset.address) return currentMarket.quoteAsset.symbol;
+    return 'TOKEN'; // fallback
   };
 
   const getTokenDecimals = (address: string) => {
-    return address === CONTRACTS.MockUSDC ? 6 : 18;
+    if (address === currentMarket.baseAsset.address) return currentMarket.baseAsset.decimals;
+    if (address === currentMarket.quoteAsset.address) return currentMarket.quoteAsset.decimals;
+    return 18; // fallback
   };
 
   const formatDuration = (seconds: bigint) => {
@@ -302,7 +315,8 @@ export default function OrderbookView() {
       offer.interestRate <= demand.maxInterestRate &&
       offer.amount >= demand.amount &&
       offer.isActive &&
-      demand.isActive
+      demand.isActive &&
+      offer.lender.toLowerCase() !== demand.borrower.toLowerCase() // Prevent self-matching
     );
   };
 

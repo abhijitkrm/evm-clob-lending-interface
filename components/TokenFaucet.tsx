@@ -58,7 +58,7 @@ export default function TokenFaucet({ isDialog = false }: TokenFaucetProps) {
         </>
       )}
       
-      <div className="flex gap-4">
+      <div className="flex gap-4 flex-wrap">
         <Button
           onClick={() => mintTokens(CONTRACTS.MockUSDC, 'USDC')}
           disabled={loading === 'USDC'}
@@ -73,6 +73,14 @@ export default function TokenFaucet({ isDialog = false }: TokenFaucetProps) {
           className="px-6 py-3 bg-gray-800 hover:bg-gray-900 text-white font-light rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed tracking-wide"
         >
           {loading === 'WETH' ? 'Minting...' : 'Get WETH'}
+        </Button>
+        
+        <Button
+          onClick={() => mintTokens(CONTRACTS.MockWBTC, 'WBTC')}
+          disabled={loading === 'WBTC'}
+          className="px-6 py-3 bg-gray-800 hover:bg-gray-900 text-white font-light rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed tracking-wide"
+        >
+          {loading === 'WBTC' ? 'Minting...' : 'Get WBTC'}
         </Button>
       </div>
       

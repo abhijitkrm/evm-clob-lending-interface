@@ -598,7 +598,7 @@ export default function ActiveLoansView() {
                 : "text-gray-500 pb-1"
             } hover:text-black transition-colors`}
           >
-            My Requests {loanDemands.length > 0 && `(${loanDemands.length})`}
+            My Asks {loanDemands.length > 0 && `(${loanDemands.length})`}
           </button>
         </div>
         <Separator className="mb-4" />
