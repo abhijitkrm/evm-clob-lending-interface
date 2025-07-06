@@ -11,6 +11,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { injected } from 'wagmi/connectors';
 import { useMarket, MARKETS } from '@/contexts/MarketContext';
+import { Navigation } from '@/components/Navigation';
 
 export default function MarketsPage() {
   const [activeTab, setActiveTab] = useState<'borrow' | 'lend'>('borrow');
@@ -32,11 +33,14 @@ export default function MarketsPage() {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
         {/* Header - Loading state */}
         <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-40">
-          <div className="max-w-7xl mx-auto px-4 lg:px-6">
+          <div className="max-w-7xl mx-auto pr-4 lg:pr-6">
             <div className="flex justify-between items-center h-12">
-              <div className="flex items-center">
-                <h1 className="text-xl font-medium text-gray-900 tracking-tight">VeniceFi</h1>
-                <span className="ml-2 text-xs font-light text-gray-500">Markets</span>
+              <div className="flex items-center space-x-8">
+                <div className="flex items-center">
+                  <h1 className="text-xl font-medium text-gray-900 tracking-tight">VeniceFi</h1>
+                  <span className="ml-2 text-xs font-light text-gray-500">Markets</span>
+                </div>
+                <Navigation />
               </div>
               <div className="flex items-center space-x-3">
                 <div className="animate-pulse bg-gray-200/60 rounded-md px-3 py-1 w-24 h-7"></div>
@@ -52,11 +56,14 @@ export default function MarketsPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6">
+        <div className="max-w-7xl mx-auto pr-4 lg:pr-6">
           <div className="flex justify-between items-center h-12">
-            <div className="flex items-center">
-              <h1 className="text-xl font-medium text-gray-900 tracking-tight">VeniceFi</h1>
-              <span className="ml-2 text-xs font-light text-gray-500">Markets</span>
+            <div className="flex items-center space-x-8">
+              <div className="flex items-center">
+                <h1 className="text-xl font-medium text-gray-900 tracking-tight">VeniceFi</h1>
+                <span className="ml-2 text-xs font-light text-gray-500">Markets</span>
+              </div>
+              <Navigation />
             </div>
             <div className="flex items-center space-x-3">
               {/* Network Indicator */}
@@ -90,7 +97,7 @@ export default function MarketsPage() {
       </header>
 
       {/* Main Content */}
-      <div className="p-3">
+      <div className="pt-3 pr-3 pb-3">
         <div className="max-w-7xl mx-auto">
           {/* Page Header */}
           <div className="mb-6">

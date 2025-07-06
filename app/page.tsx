@@ -11,6 +11,7 @@ import OrderbookView from '@/components/OrderbookView';
 import TokenFaucet from '@/components/TokenFaucet';
 import FaucetDialog from '@/components/FaucetDialog';
 import ActiveLoansView from '@/components/ActiveLoansView';
+import { Navigation } from '@/components/Navigation';
 
 export default function Home() {
   const { address, isConnected } = useAccount();
@@ -33,9 +34,12 @@ export default function Home() {
         <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
-              <div className="flex items-center">
-                <h1 className="text-2xl font-light text-gray-900 tracking-tight">VeniceFi</h1>
-                <span className="ml-3 text-sm font-light text-gray-500">Decentralized Orderbook Lending</span>
+              <div className="flex items-center space-x-8">
+                <div className="flex items-center">
+                  <h1 className="text-2xl font-light text-gray-900 tracking-tight">VeniceFi</h1>
+                  <span className="ml-3 text-sm font-light text-gray-500">Decentralized Orderbook Lending</span>
+                </div>
+                <Navigation />
               </div>
               <div className="flex items-center space-x-4">
                 <div className="animate-pulse bg-gray-200/60 rounded-md px-4 py-2 w-32 h-10"></div>
@@ -72,9 +76,12 @@ export default function Home() {
       <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-light text-gray-900 tracking-tight">VeniceFi</h1>
-              <span className="ml-3 text-sm font-light text-gray-500">Decentralized Orderbook Lending</span>
+            <div className="flex items-center space-x-8">
+              <div className="flex items-center">
+                <h1 className="text-2xl font-light text-gray-900 tracking-tight">VeniceFi</h1>
+                <span className="ml-3 text-sm font-light text-gray-500">Decentralized Orderbook Lending</span>
+              </div>
+              <Navigation />
             </div>
             <div className="flex items-center space-x-4">
               {isConnected ? (

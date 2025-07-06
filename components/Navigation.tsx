@@ -1,0 +1,64 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from '@/components/ui/navigation-menu';
+import { cn } from '@/lib/utils';
+
+export function Navigation() {
+  const pathname = usePathname();
+
+  return (
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <Link href="/" legacyBehavior passHref>
+            <NavigationMenuLink 
+              className={cn(
+                navigationMenuTriggerStyle(),
+                "h-8 px-3 text-sm font-light",
+                pathname === "/" ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:text-gray-900"
+              )}
+            >
+              Home
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        
+        <NavigationMenuItem>
+          <Link href="/markets" legacyBehavior passHref>
+            <NavigationMenuLink 
+              className={cn(
+                navigationMenuTriggerStyle(),
+                "h-8 px-3 text-sm font-light",
+                pathname === "/markets" ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:text-gray-900"
+              )}
+            >
+              Markets
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        
+        <NavigationMenuItem>
+          <Link href="/docs" legacyBehavior passHref>
+            <NavigationMenuLink 
+              className={cn(
+                navigationMenuTriggerStyle(),
+                "h-8 px-3 text-sm font-light",
+                pathname === "/docs" ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:text-gray-900"
+              )}
+            >
+              Docs
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+}
