@@ -2,6 +2,7 @@
 
 import { Navigation } from '@/components/Navigation';
 import NetworkIndicator from '@/components/NetworkIndicator';
+import Link from 'next/link';
 
 export default function DocsPage() {
   return (
@@ -27,7 +28,7 @@ export default function DocsPage() {
           {/* Page Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-light text-gray-900 tracking-tight">Documentation</h1>
-            <p className="text-gray-600 text-sm mt-1">Learn how to use VeniceFi's decentralized lending protocol</p>
+            <p className="text-gray-600 text-sm mt-1">Learn how to use VeniceFi&apos;s decentralized lending protocol</p>
           </div>
 
           {/* Documentation Content */}
@@ -63,7 +64,7 @@ export default function DocsPage() {
                   </div>
                   <div>
                     <h3 className="text-lg font-medium text-gray-800 mb-2">Real-Time Matching</h3>
-                    <p className="text-gray-600">Our smart contracts handle automatic matching when a borrow demand meets a lending offer's criteria, ensuring efficient price discovery.</p>
+                    <p className="text-gray-600">Our smart contracts handle automatic matching when a borrow demand meets a lending offer&apos;s criteria, ensuring efficient price discovery.</p>
                   </div>
                   <div>
                     <h3 className="text-lg font-medium text-gray-800 mb-2">Collateralized Loans</h3>
@@ -79,12 +80,12 @@ export default function DocsPage() {
               <div className="bg-white/60 backdrop-blur-sm rounded-lg border border-gray-200/50 p-6">
                 <h3 className="text-lg font-medium text-gray-900 mb-4">Quick Links</h3>
                 <div className="space-y-2">
-                  <a href="/markets" className="block text-blue-600 hover:text-blue-800 text-sm">
+                  <Link href="/markets" className="block text-blue-600 hover:text-blue-800 text-sm">
                     → Go to Markets
-                  </a>
-                  <a href="/" className="block text-blue-600 hover:text-blue-800 text-sm">
+                  </Link>
+                  <Link href="/" className="block text-blue-600 hover:text-blue-800 text-sm">
                     → Back to Home
-                  </a>
+                  </Link>
                 </div>
               </div>
 
