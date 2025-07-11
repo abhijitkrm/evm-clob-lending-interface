@@ -11,16 +11,22 @@ export const metadata: Metadata = {
   description: "Fixed-rate lending protocol with transparent orderbook",
 };
 
+import React from "react";
+import ClientWhitelistGate from "@/components/ClientWhitelistGate";
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          {children}
+          <ClientWhitelistGate>
+            {children}
+          </ClientWhitelistGate>
         </Providers>
         <Toaster />
       </body>

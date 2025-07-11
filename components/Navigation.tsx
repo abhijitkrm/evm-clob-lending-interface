@@ -18,17 +18,15 @@ export function Navigation() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/" legacyBehavior passHref>
-            <NavigationMenuLink 
-              className={cn(
-                navigationMenuTriggerStyle(),
-                "h-8 px-3 text-sm font-light",
-                pathname === "/" ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:text-gray-900"
-              )}
-            >
-              Home
+          <NavigationMenuLink asChild className={cn(
+              navigationMenuTriggerStyle(),
+              "h-8 px-3 text-sm font-light",
+              pathname === "/" ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:text-gray-900"
+            )}>
+              <Link href="/">
+                Home
+              </Link>
             </NavigationMenuLink>
-          </Link>
         </NavigationMenuItem>
         
         <NavigationMenuItem>
