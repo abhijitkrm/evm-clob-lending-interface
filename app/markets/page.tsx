@@ -11,6 +11,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { injected } from 'wagmi/connectors';
 import { useMarket, MARKETS } from '@/contexts/MarketContext';
+import MarketDropdown from './MarketDropdown';
 import { Navigation } from '@/components/Navigation';
 
 export default function MarketsPage() {
@@ -107,21 +108,13 @@ export default function MarketsPage() {
                 <p className="text-gray-600 text-sm mt-1">Trade lending and borrowing positions with real-time orderbook matching</p>
               </div>
               
-              {/* Market Switcher */}
-              <div className="flex bg-white/60 backdrop-blur-sm rounded-lg border border-gray-200/50 p-1">
-                {availableMarkets.map((market) => (
-                  <button
-                    key={market.id}
-                    onClick={() => setCurrentMarket(market)}
-                    className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-                      currentMarket.id === market.id
-                        ? 'bg-white text-gray-900 shadow-sm'
-                        : 'text-gray-600 hover:text-gray-900'
-                    }`}
-                  >
-                    {market.name}
-                  </button>
-                ))}
+              {/* Market Dropdown Switcher */}
+              <div className="min-w-[180px]">
+                <MarketDropdown 
+                  currentMarket={currentMarket}
+                  setCurrentMarket={setCurrentMarket}
+                  availableMarkets={availableMarkets.filter(m => m.id === 'wbtc-usdc')}
+                />
               </div>
             </div>
           </div>

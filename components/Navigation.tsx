@@ -17,44 +17,30 @@ export function Navigation() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
+
+        
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={cn(
               navigationMenuTriggerStyle(),
               "h-8 px-3 text-sm font-light",
-              pathname === "/" ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:text-gray-900"
+              pathname === "/markets" ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:text-gray-900"
             )}>
-              <Link href="/">
-                Home
-              </Link>
-            </NavigationMenuLink>
-        </NavigationMenuItem>
-        
-        <NavigationMenuItem>
-          <Link href="/markets" legacyBehavior passHref>
-            <NavigationMenuLink 
-              className={cn(
-                navigationMenuTriggerStyle(),
-                "h-8 px-3 text-sm font-light",
-                pathname === "/markets" ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:text-gray-900"
-              )}
-            >
+            <Link href="/markets">
               Markets
-            </NavigationMenuLink>
-          </Link>
+            </Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
         
         <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink 
-              className={cn(
-                navigationMenuTriggerStyle(),
-                "h-8 px-3 text-sm font-light",
-                pathname === "/docs" ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:text-gray-900"
-              )}
-            >
+          <NavigationMenuLink asChild className={cn(
+              navigationMenuTriggerStyle(),
+              "h-8 px-3 text-sm font-light",
+              pathname === "/docs" ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:text-gray-900"
+            )}>
+            <Link href="/docs">
               Docs
-            </NavigationMenuLink>
-          </Link>
+            </Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

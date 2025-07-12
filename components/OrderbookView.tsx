@@ -644,7 +644,7 @@ export default function OrderbookView() {
                     >
                       {/* Depth Bar */}
                       <div 
-                        className="absolute inset-y-0 right-0 bg-red-100/60 rounded-l-sm transition-all duration-300 group-hover:bg-red-200/80"
+                        className="absolute inset-y-0 left-0 bg-red-100/60 rounded-r-sm transition-all duration-300 group-hover:bg-red-200/80"
                         style={{ width: `${widthPercentage}%` }}
                       />
                       

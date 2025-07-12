@@ -13,7 +13,10 @@ import FaucetDialog from '@/components/FaucetDialog';
 import ActiveLoansView from '@/components/ActiveLoansView';
 import { Navigation } from '@/components/Navigation';
 
+import { redirect } from 'next/navigation';
+
 export default function Home() {
+  redirect('/markets');
   const { address, isConnected } = useAccount();
   const { connect } = useConnect();
   const { disconnect } = useDisconnect();
